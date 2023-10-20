@@ -24,7 +24,7 @@ Logging:
 - [Log4J Simple](https://github.com/apache/logging-log4j2) - **2.0.5**
 
 ## Download
-Currently this project only supports [GitHub Release]() with a **.jar**.
+Currently this project only supports [GitHub Release](https://github.com/ShuraBlack/JhttpFileShare/releases) with a **.jar**.
 
 ## Java Arguments
 ```
@@ -61,5 +61,6 @@ java -jar JhttpFileShare.jar -ip=wlan0
 ```
 
 ## Example Page
+![Example](https://github.com/ShuraBlack/JhttpFileShare/assets/69372954/44e6ad5f-0540-4542-af8c-04f4c252842d)
 
 
