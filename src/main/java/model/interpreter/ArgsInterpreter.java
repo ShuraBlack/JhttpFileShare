@@ -1,11 +1,8 @@
 package model.interpreter;
 
-import controller.Controller;
-import model.data.Structure;
-import model.server.Server;
-import model.session.UserSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import util.Config;
 
 import java.net.*;
 import java.util.*;
@@ -44,6 +41,10 @@ public class ArgsInterpreter {
     private ArgsInterpreter() {
     }
 
+    // =================================================================================================================
+    // Public Methods
+    // =================================================================================================================
+
     /**
      * Interprets the command line arguments.
      * @param args Command line arguments.
@@ -76,8 +77,8 @@ public class ArgsInterpreter {
                 case "-v":
                     interpretVerbose();
                     break;
-                case "-nolimit":
-                    interpretRootLimit();
+                case "-nr":
+                    interpretRootRestriction();
                     break;
                 case "-threads":
                     interpretThreads(entry.getValue());
@@ -122,8 +123,8 @@ public class ArgsInterpreter {
                             .filter(Inet4Address.class::isInstance)
                             .findFirst();
                     if (inetAddress.isPresent()) {
-                        Server.IP_ADDRESS = inetAddress.get().getHostAddress();
-                        LOGGER.info("Set IP Address to {}", Server.IP_ADDRESS);
+                        Config.set("IP_ADDRESS", inetAddress.get().getHostAddress());
+                        LOGGER.info("Set IP Address to {}", Config.getIpAddress());
                     } else {
                         LOGGER.warn("No IPv4 Address found! Use default IP Address");
                     }
@@ -151,24 +152,24 @@ public class ArgsInterpreter {
             return;
         }
 
-        Server.PORT = Integer.parseInt(value);
-        LOGGER.info("Set Port to {}", Server.PORT);
+        Config.set("PORT", value);
+        LOGGER.info("Set Port to {}", Config.getPort());
     }
 
     /**
      * Sets the verbose mode to the given value.
      */
     private static void interpretVerbose() {
-        Controller.setVerbose(true);
+        Config.set("VERBOSE", "true");
         LOGGER.info("Verbose got enabled");
     }
 
     /**
      * Sets the root limit to the given value.
      */
-    private static void interpretRootLimit() {
-        UserSession.setRootLimited(false);
-        LOGGER.info("Root folder Limit got disabled");
+    private static void interpretRootRestriction() {
+        Config.set("ROOT_RESTRICTED", "false");
+        LOGGER.info("Root folder restriction got disabled");
     }
 
     /**
@@ -186,8 +187,8 @@ public class ArgsInterpreter {
             LOGGER.warn("Thread Pool Size is not a number! Use default thread pool size 3.", e);
             return;
         }
-        Server.setThreadPoolSize(Integer.parseInt(value));
-        LOGGER.info("Set Thread Pool Size to {}", Server.getThreadPoolSize());
+        Config.set("THREAD_POOL_SIZE", value);
+        LOGGER.info("Set Thread Pool Size to {}", Config.getThreadPoolSize());
     }
 
     /**
@@ -199,8 +200,8 @@ public class ArgsInterpreter {
             LOGGER.warn("Root not found! Use default root.");
             return;
         }
-        Structure.ROOT_DIR = value.replaceAll("\\\\", "/");
-        LOGGER.info("Set Root to {}", Structure.ROOT_DIR);
+        Config.set("ROOT_DIRECTORY", value.replaceAll("\\\\", "/"));
+        LOGGER.info("Set Root to {}", Config.getRootDirectory());
     }
 
     /**
@@ -212,7 +213,7 @@ public class ArgsInterpreter {
         System.out.println("FLAGS:");
         System.out.println("\t-ip\t\t\t\t\tShows all Network Interfaces\n"
                 + "\t-v, -verbose\t\t\t\tEnables verbose mode (more informations Server-side)\n"
-                + "\t-nolimit\t\t\t\tDisables the root folder restriction (Access entire file browser)\n"
+                + "\t-nr\t\t\t\tDisables the root folder restriction (Access entire file browser)\n"
                 + "\t-h, -help\t\t\t\tShows this help\n");
         System.out.println("OPTIONS:\n"
                 + "\t-ip=<network_name>\t\t\tSets the IP Address to the given network name [default: 0.0.0.0]\n"
