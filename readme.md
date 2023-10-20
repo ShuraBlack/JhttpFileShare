@@ -4,7 +4,8 @@ files across different devices within your network. This tool is not just about 
 file sharing uncomplicated and efficient.
 
 This application will start a local server to access your directories and transfer files to other devices.
-> ❗️Disclaimer: Your JDK executable needs to be able to bypass your firewall before the server is accessible in your local network.
+> ❗️Disclaimer: Your JDK executable needs to be able to bypass your firewall before the server is accessible in your local network.<br>
+> [Win11 Tutorial by pureinfotech](https://pureinfotech.com/allow-apps-firewall-windows-11/)
 
 ## License
 This project is licensed under the **Apache 2.0** license.<br>
