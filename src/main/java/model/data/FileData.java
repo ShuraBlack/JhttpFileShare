@@ -1,5 +1,7 @@
 package model.data;
 
+import util.Config;
+
 import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -64,8 +66,9 @@ public class FileData {
      * @param path The absolute path to the directory.
      */
     public static void getDirectoryStructure(String path) {
-        addFile(new File(path), 0);
-        Structure.ROOT_TREE = Structure.ROOT_TREE.replace("null","");
+        StringBuilder builder = new StringBuilder();
+        addFile(new File(path), 0, builder);
+        Config.set("ROOT_STRUCTURE", builder.toString().replace("null",""));
     }
 
     /**
@@ -73,12 +76,12 @@ public class FileData {
      * @param file The file to add.
      * @param depth The depth of the file in the directory structure.
      */
-    public static void addFile(File file, int depth) {
-        Structure.ROOT_TREE += "  ".repeat(depth) + "> " + file.getName() + "<br>";
+    public static void addFile(File file, int depth, StringBuilder builder) {
+        builder.append("  ".repeat(depth)).append("> ").append(file.getName()).append("<br>");
 
         for (File f : file.listFiles()) {
             if (f.isDirectory() && !f.isHidden()) {
-                addFile(f, depth + 1);
+                addFile(f, depth + 1, builder);
             }
         }
     }

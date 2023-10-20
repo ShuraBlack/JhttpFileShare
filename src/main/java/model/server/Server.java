@@ -6,6 +6,7 @@ import model.pages.DirectoryPage;
 import model.pages.DownloadPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import util.Config;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -27,21 +28,6 @@ public class Server {
     private static final Logger LOGGER = LogManager.getLogger(Server.class.getName());
 
     /**
-     * Defines the size of the thread pool.
-     */
-    private static int THREAD_POOL_SIZE = 3;
-
-    /**
-     * Defines the port of the server.
-     */
-    public static int PORT = 80;
-
-    /**
-     * Defines the ip address of the server.
-     */
-    public static String IP_ADDRESS = "0.0.0.0";
-
-    /**
      * The HttpServer instance.
      */
     private HttpServer httpServer;
@@ -51,21 +37,21 @@ public class Server {
      */
     public Server() {
         try {
-            httpServer = HttpServer.create(new InetSocketAddress(IP_ADDRESS, PORT), 0);
+            httpServer = HttpServer.create(new InetSocketAddress(Config.getIpAddress(), Config.getPort()), 0);
 
             httpServer.createContext("/directory", new DirectoryPage());
-            if (Controller.isVerbose())
+            if (Config.isVerbose())
                 LOGGER.info("Created context /directory");
             httpServer.createContext("/download", new DownloadPage());
-            if (Controller.isVerbose())
+            if (Config.isVerbose())
                 LOGGER.info("Created context /download");
-            httpServer.setExecutor(Executors.newFixedThreadPool(THREAD_POOL_SIZE));
+            httpServer.setExecutor(Executors.newFixedThreadPool(Config.getThreadPoolSize()));
             httpServer.start();
         } catch (IOException e) {
             LOGGER.error("Couldnt start Server!", e);
         }
 
-        LOGGER.info("Server started on http://{}:{}/directory", IP_ADDRESS, PORT);
+        LOGGER.info("Server started on http://{}:{}/directory", Config.getIpAddress(), Config.getPort());
     }
 
     /**
@@ -73,29 +59,5 @@ public class Server {
      */
     public void stop() {
         httpServer.stop(0);
-    }
-
-    // =================================================================================================================
-    // Getter
-    // =================================================================================================================
-
-    /**
-     * Returns the current thread pool size.
-     * @return The current thread pool size.
-     */
-    public static String getThreadPoolSize() {
-        return String.valueOf(THREAD_POOL_SIZE);
-    }
-
-    // =================================================================================================================
-    // Setter
-    // =================================================================================================================
-
-    /**
-     * Sets the thread pool size.
-     * @param size The new thread pool size.
-     */
-    public static void setThreadPoolSize(int size) {
-        THREAD_POOL_SIZE = size;
     }
 }

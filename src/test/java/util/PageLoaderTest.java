@@ -10,7 +10,7 @@ class PageLoaderTest {
     @Test
     @DisplayName("loadPage() - valid input - return value")
     void loadPage_validInput() {
-        final String content = PageLoader.getContent("directory.html");
+        final String content = PageLoader.getPage("directory");
 
         assertNotNull(content);
     }
@@ -18,7 +18,7 @@ class PageLoaderTest {
     @Test
     @DisplayName("loadPage() - empty input - return name")
     void loadPage_emptyInput() {
-        final String content = PageLoader.getContent("");
+        final String content = PageLoader.getPage("");
 
         assertNotNull(content);
         assertEquals("Directory.html", content);
@@ -27,12 +27,12 @@ class PageLoaderTest {
     @Test
     @DisplayName("loadPage() - null input - throw exception")
     void loadPage_nullInput() {
-        assertThrows(NullPointerException.class, () -> PageLoader.getContent(null));
+        assertThrows(NullPointerException.class, () -> PageLoader.getPage(null));
     }
 
     @Test
     @DisplayName("loadPage() - invalid input - throw exception")
     void loadPage_invalidInput() {
-        assertThrows(NullPointerException.class, () -> PageLoader.getContent("invalid.html"));
+        assertThrows(NullPointerException.class, () -> PageLoader.getPage("invalid.html"));
     }
 }
