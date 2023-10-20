@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directory</title>
+    <style type="text/css">
+
+        body {
+            font-family: courier, serif;
+            height: 100%;
+            width: 100%;
+            color: #ffffff;
+            background: #000000;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        html {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+        .container {
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+            overflow: scroll;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .table {
+            margin-left: 3rem;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .return {
+            {{returnDisabled}}
+            font-family: courier, serif;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            color: #ffffff;
+            background-color: transparent;
+            border: none;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 1rem;
+            transition-duration: 0.1s;
+        }
+
+        .return:hover {
+            color: #6c757d;
+        }
+
+        .dir {
+            color: #4EB1CB;
+            text-decoration: none;
+            transition-duration: 0.2s;
+        }
+
+        .dir:hover {
+            color: #c4e5ee;
+        }
+
+
+        .download {
+            text-decoration: none;
+        }
+
+        .structure {
+            margin-top: 1rem;
+            white-space: pre;
+        }
+
+        .position {
+            font-size: 18px;
+            font-weight: bold;
+            margin-left: 1.5rem;
+        }
+
+        .sectionB {
+            margin-left: 3rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="sectionA">
+        <h1>📂 Directory</h1>
+        <h4>{{workingDir}}</h4>
+        <button class="return" name="return" onclick="window.location.href='{{return}}';">¬ Return</button>
+        {{files}}
+    </div>
+    <div class="sectionB">
+        <h1>📖 Structure</h1>
+        {{structure}}
+        <p>© ShuraBlack - 2023</p>
+    </div>
+</div>
+</body>
+</html>
