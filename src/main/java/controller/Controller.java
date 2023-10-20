@@ -1,12 +1,12 @@
 package controller;
 
 import model.data.FileData;
-import model.data.Structure;
 import model.interpreter.ArgsInterpreter;
 import model.server.Server;
 import model.session.UserSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import util.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +28,6 @@ public class Controller {
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
 
     /**
-     * Defines if the server should print out more information.
-     */
-    private static boolean VERBOSE = false;
-
-    /**
      * The server instance.
      */
     private final Server server;
@@ -48,13 +43,14 @@ public class Controller {
      * @param args Command line arguments.
      */
     public Controller(String[] args) {
+        Config.init();
         ArgsInterpreter.interpret(args);
         server = new Server();
 
-        FileData.getDirectoryStructure(Structure.ROOT_DIR);
+        FileData.getDirectoryStructure(Config.getRootDirectory());
 
         new Thread(() -> {
-            if (Controller.isVerbose())
+            if (Config.isVerbose())
                 LOGGER.info("Start Command Line Interface...");
 
             System.out.println(
@@ -92,26 +88,6 @@ public class Controller {
         return SESSIONS;
     }
 
-    /**
-     * Getter for verbose mode
-     * @return true, if verbose mode is enabled.
-     */
-    public static boolean isVerbose() {
-        return VERBOSE;
-    }
-
-    // =================================================================================================================
-    // Setter
-    // =================================================================================================================
-
-    /**
-     * Setter for verbose mode.
-     * @param verbose true, if verbose mode should be enabled.
-     */
-    public static void setVerbose(boolean verbose) {
-        Controller.VERBOSE = verbose;
-    }
-
     // =================================================================================================================
     // Private Methods
     // =================================================================================================================
@@ -122,13 +98,13 @@ public class Controller {
      */
     private static String getProperties() {
         String properties = String.format("= Verbose: %s, "
-                        + "Root Limit: %s, "
+                        + "Root Restriction: %s, "
                         + "Port: %s, "
                         + "Thread Pool Size: %s",
-                colorize(VERBOSE),
-                colorize(UserSession.isRootLimited()),
-                Server.PORT,
-                Server.getThreadPoolSize());
+                colorize(Config.isVerbose()),
+                colorize(Config.isRootRestricted()),
+                Config.getPort(),
+                Config.getThreadPoolSize());
         properties += " ".repeat(102 - properties.length()) + " =";
         return properties;
     }

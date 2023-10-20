@@ -1,15 +1,18 @@
 package model.interpreter;
 
-import controller.Controller;
-import model.data.Structure;
-import model.server.Server;
-import model.session.UserSession;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import util.Config;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArgsInterpreterTest {
+
+    @BeforeAll
+    static void setup() {
+        Config.init();
+    }
 
     @Test
     @DisplayName("interpret() - valid input - set port")
@@ -18,7 +21,7 @@ class ArgsInterpreterTest {
 
         ArgsInterpreter.interpret(args);
 
-        assertEquals(Server.PORT, 8080);
+        assertEquals(Config.getPort(), 8080);
     }
 
     @Test
@@ -28,7 +31,7 @@ class ArgsInterpreterTest {
 
         ArgsInterpreter.interpret(args);
 
-        assertEquals(Server.PORT, 80);
+        assertEquals(Config.getPort(), 80);
     }
 
     @Test
@@ -38,7 +41,7 @@ class ArgsInterpreterTest {
 
         ArgsInterpreter.interpret(args);
 
-        assertEquals(Server.PORT, 80);
+        assertEquals(Config.getPort(), 80);
     }
 
     @Test
@@ -48,18 +51,17 @@ class ArgsInterpreterTest {
 
         ArgsInterpreter.interpret(args);
 
-        assertEquals(Server.IP_ADDRESS, "127.0.0.1");
+        assertEquals(Config.getIpAddress(), "127.0.0.1");
     }
 
     @Test
     @DisplayName("interpret() - invalid input - default ip")
     void interpret_ipSet_invalidInput() {
-        Server.IP_ADDRESS = "0.0.0.0";
         final String[] args = {"-ip=invalid"};
 
         ArgsInterpreter.interpret(args);
 
-        assertEquals(Server.IP_ADDRESS, "0.0.0.0");
+        assertEquals("0.0.0.0", Config.getIpAddress());
     }
 
     @Test
@@ -69,7 +71,7 @@ class ArgsInterpreterTest {
 
         ArgsInterpreter.interpret(args);
 
-        assertTrue(Controller.isVerbose());
+        assertTrue(Config.isVerbose());
     }
 
     @Test
@@ -79,7 +81,7 @@ class ArgsInterpreterTest {
 
         ArgsInterpreter.interpret(args);
 
-        assertFalse(UserSession.isRootLimited());
+        assertFalse(Config.isRootRestricted());
     }
 
     @Test
@@ -89,18 +91,17 @@ class ArgsInterpreterTest {
 
         ArgsInterpreter.interpret(args);
 
-        assertEquals(Server.getThreadPoolSize(), "" + 1);
+        assertEquals(Config.getThreadPoolSize(), 1);
     }
 
     @Test
     @DisplayName("interpret() - invalid input - default threads")
     void interpret_threadsSet_invalidInput() {
-        Server.setThreadPoolSize(3);
         final String[] args = {"-threads=invalid"};
 
         ArgsInterpreter.interpret(args);
 
-        assertEquals(Server.getThreadPoolSize(), "" + 3);
+        assertEquals(3, Config.getThreadPoolSize());
     }
 
     @Test
@@ -110,7 +111,7 @@ class ArgsInterpreterTest {
 
         ArgsInterpreter.interpret(args);
 
-        assertEquals(Structure.ROOT_DIR, "C:/Users/");
+        assertEquals(Config.getRootDirectory(), "C:/Users/");
     }
 
     @Test
@@ -120,6 +121,6 @@ class ArgsInterpreterTest {
 
         ArgsInterpreter.interpret(args);
 
-        assertEquals(Structure.ROOT_DIR, System.getProperty("user.dir").replaceAll("\\\\","/"));
+        assertEquals(Config.getRootDirectory(), System.getProperty("user.dir").replaceAll("\\\\","/"));
     }
 }

@@ -2,10 +2,9 @@ package model.pages;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import controller.Controller;
-import model.data.Structure;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import util.Config;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,12 +36,12 @@ public class DownloadPage implements HttpHandler {
     @Override
     public void handle(HttpExchange he) throws IOException {
         Map<String, String> params = queryToMap(he.getRequestURI().getQuery());
-        if (params.isEmpty() || !params.containsKey(FILENAME) || !params.get(FILENAME).contains(Structure.ROOT_DIR)) {
+        if (params.isEmpty() || !params.containsKey(FILENAME) || !params.get(FILENAME).contains(Config.getRootDirectory())) {
             return;
         }
 
         String[] path = params.get(FILENAME).split("/");
-        if (Controller.isVerbose())
+        if (Config.isVerbose())
             LOGGER.info(String.format("%nExchange for \033[0;33m</Download>\033[0m...%nfrom %s:%s%nfile \033[0;33m<%s>\033[0m"
                 , he.getRemoteAddress().getAddress().getHostAddress(), he.getRemoteAddress().getPort(), path[path.length - 1]));
 

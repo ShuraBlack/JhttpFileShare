@@ -1,5 +1,6 @@
 package model.session;
 
+import model.pages.DirectoryPage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +36,7 @@ public class UserSessionTest {
         final UserSession userSession = new UserSession("");
         userSession.setWorkDirectory("C:/Users/");
 
-        final String html = userSession.getFileHtml();
+        final String html = DirectoryPage.htmlFromUserSession(userSession);
 
         assertEquals("<h1>Empty Directory</h1>", html);
     }
