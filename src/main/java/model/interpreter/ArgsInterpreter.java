@@ -210,10 +210,10 @@ public class ArgsInterpreter {
         System.out.println("JhttpFileShare Server 0.1.0\n");
         System.out.println("USAGE:\n\tjava -jar JhttpFileShare.jar [options/flags]\n");
         System.out.println("FLAGS:");
-        System.out.println("\t-ip\t\t\t\t\t\t\tShows all Network Interfaces\n"
+        System.out.println("\t-ip\t\t\t\t\tShows all Network Interfaces\n"
                 + "\t-v, -verbose\t\t\t\tEnables verbose mode (more informations Server-side)\n"
-                + "\t-nolimit\t\t\t\t\tDisables the root folder restriction (Access entire file browser)\n"
-                + "\t-h, -help\t\t\t\t\tShows this help\n");
+                + "\t-nolimit\t\t\t\tDisables the root folder restriction (Access entire file browser)\n"
+                + "\t-h, -help\t\t\t\tShows this help\n");
         System.out.println("OPTIONS:\n"
                 + "\t-ip=<network_name>\t\t\tSets the IP Address to the given network name [default: 0.0.0.0]\n"
                 + "\t-p, -port=<port>\t\t\tSets the Port to the given port [default: 80]\n"
