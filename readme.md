@@ -24,12 +24,12 @@ Logging:
 - [Log4j API](https://github.com/apache/logging-log4j2) - **2.0.5**
 - [Log4J Simple](https://github.com/apache/logging-log4j2) - **2.0.5**
 
-## Download
+## Download ![Static Badge](https://img.shields.io/badge/version-v0.1.2-%230679b6)
 Currently this project only supports [GitHub Release](https://github.com/ShuraBlack/JhttpFileShare/releases) with a **.jar**.
 
 ## Java Arguments
 ```
-JhttpFileShare Server 0.1.1
+JhttpFileShare Server x.x.x
 
 USAGE:
 	java -jar JhttpFileShare.jar [options/flags]
@@ -62,6 +62,4 @@ java -jar JhttpFileShare.jar -ip=wlan0
 ```
 
 ## Example Page
-![Example](https://github.com/ShuraBlack/JhttpFileShare/assets/69372954/44e6ad5f-0540-4542-af8c-04f4c252842d)
-
-
+![Example page](https://github.com/ShuraBlack/JhttpFileShare/assets/69372954/8f06b174-55c9-47dd-bcf0-d8ea8e631ee6)

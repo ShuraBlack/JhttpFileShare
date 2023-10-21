@@ -55,7 +55,7 @@ public class Controller {
 
             System.out.println(
                       "==================================================================================\n"
-                    + "= JhttpFileShare - Version 0.1.0                                                 =\n"
+                    + "= JhttpFileShare - Version 0.1.2                                                 =\n"
                     + "= Code by ShuraBlack                                                             =\n"
                     + "==================================================================================\n"
                     + getProperties() + "\n"
