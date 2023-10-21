@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpServer;
 import controller.Controller;
 import model.pages.DirectoryPage;
 import model.pages.DownloadPage;
+import model.pages.UploadPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import util.Config;
@@ -25,7 +26,7 @@ public class Server {
     /**
      * Logger for the Server class.
      */
-    private static final Logger LOGGER = LogManager.getLogger(Server.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(Server.class);
 
     /**
      * The HttpServer instance.
@@ -45,6 +46,9 @@ public class Server {
             httpServer.createContext("/download", new DownloadPage());
             if (Config.isVerbose())
                 LOGGER.info("Created context /download");
+            httpServer.createContext("/upload", new UploadPage());
+            if (Config.isVerbose())
+                LOGGER.info("Created context /upload");
             httpServer.setExecutor(Executors.newFixedThreadPool(Config.getThreadPoolSize()));
             httpServer.start();
         } catch (IOException e) {

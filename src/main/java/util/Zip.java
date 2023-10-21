@@ -24,14 +24,14 @@ public class Zip {
      * @param destinationFile The destination of the zip file.
      * @throws IOException If an I/O error occurs.
      */
-    public static ZipOutputStream zipFolder(String sourceFile, String destinationFile) throws IOException {
+    public static void zipFolder(String sourceFile, String destinationFile) throws IOException {
         FileOutputStream fos = new FileOutputStream(destinationFile + ".zip");
         ZipOutputStream zipOut = new ZipOutputStream(fos);
 
         File fileToZip = new File(sourceFile);
         zipSubFiles(fileToZip, fileToZip.getName(), zipOut);
 
-        return zipOut;
+        zipOut.close();
     }
 
     /**
@@ -39,7 +39,7 @@ public class Zip {
      * @param fileToZip The file to zip.
      * @param fileName The name of the file.
      * @param zipOut The zip output stream.
-     * @throws IOException
+     * @throws IOException If an I/O error occurs.
      */
     private static void zipSubFiles(File fileToZip, String fileName, ZipOutputStream zipOut) throws IOException {
         if (fileToZip.isHidden()) {
@@ -59,14 +59,14 @@ public class Zip {
             }
             return;
         }
-        FileInputStream fis = new FileInputStream(fileToZip);
-        ZipEntry zipEntry = new ZipEntry(fileName);
-        zipOut.putNextEntry(zipEntry);
-        byte[] bytes = new byte[1024];
-        int length;
-        while ((length = fis.read(bytes)) >= 0) {
-            zipOut.write(bytes, 0, length);
+        try (FileInputStream fis = new FileInputStream(fileToZip)) {
+            ZipEntry zipEntry = new ZipEntry(fileName);
+            zipOut.putNextEntry(zipEntry);
+            byte[] bytes = new byte[1024];
+            int length;
+            while ((length = fis.read(bytes)) >= 0) {
+                zipOut.write(bytes, 0, length);
+            }
         }
-        fis.close();
     }
 }
