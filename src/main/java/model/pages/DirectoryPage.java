@@ -69,12 +69,12 @@ public class DirectoryPage implements HttpHandler {
     public static String htmlFromUserSession(UserSession session) {
         StringBuilder html = new StringBuilder();
         String position = null;
+        html.append("<dl class=\"table\">\n");
         for (FileData file : session.getFiles()) {
             if (position == null || !position.equals(file.getName().substring(0, 1))) {
                 position = file.getName().substring(0, 1);
                 html.append("<p class=\"position\">").append(position).append("</p>\n");
             }
-            html.append("<dl class=\"table\">\n");
 
             String name;
             if (file.getType().equals("Directory")) {
@@ -92,8 +92,8 @@ public class DirectoryPage implements HttpHandler {
             if (file.getSize() > 0) {
                 html.append("<dd>").append(convertSize(file.getSize())).append("</dd>\n");
             }
-            html.append("</dl>\n");
         }
+        html.append("</dl>\n");
         if (session.getFiles().isEmpty()) {
             html.append("<h1>Empty Directory</h1>");
         }
@@ -110,10 +110,11 @@ public class DirectoryPage implements HttpHandler {
      * @param content The content of the page.
      * @return The filled content.
      */
-    private String populateContent(UserSession userSession, String content) {
+    public static String populateContent(UserSession userSession, String content) {
         content = content.replace("{{returnDisabled}}",
                 Config.isRootRestricted() && userSession.getWorkDirectory().equals(Config.getRootDirectory())
                         ? "display: none;" : "display: inline-block;");
+        content = content.replace("{{upload}}", String.format("http://%s:%d/upload", Config.getIpAddress(), Config.getPort()));
         content = content.replace("{{workingDir}}", userSession.getWorkDirectory());
         content = content.replace("{{files}}", htmlFromUserSession(userSession));
         content = content.replace("{{return}}", userSession.getReturnWorkingDirectory());

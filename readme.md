@@ -24,7 +24,7 @@ Logging:
 - [Log4j API](https://github.com/apache/logging-log4j2) - **2.0.5**
 - [Log4J Simple](https://github.com/apache/logging-log4j2) - **2.0.5**
 
-## Download ![Static Badge](https://img.shields.io/badge/version-v0.1.2-%230679b6)
+## Download ![Static Badge](https://img.shields.io/badge/version-v0.1.3-%230679b6)
 Currently this project only supports [GitHub Release](https://github.com/ShuraBlack/JhttpFileShare/releases) with a **.jar**.
 
 ## Java Arguments

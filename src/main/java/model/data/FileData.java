@@ -53,7 +53,10 @@ public class FileData {
         List<FileData> files = new ArrayList<>();
         File file = new File(path);
 
-        List<File> filesList = Arrays.stream(Objects.requireNonNull(file.listFiles())).sorted(Comparator.comparing(File::getName)).collect(Collectors.toList());
+        List<File> filesList = Arrays
+                .stream(Objects.requireNonNull(file.listFiles()))
+                .sorted(Comparator.comparing(a -> a.getName().toLowerCase()))
+                .collect(Collectors.toList());
 
         for (File f : filesList) {
             files.add(new FileData(f.getName(), f.isDirectory() ? "Directory" : "File", f.length()));

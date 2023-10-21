@@ -37,11 +37,9 @@
             border-collapse: collapse;
         }
 
-        .table th,
-        .table td {
+        .table dt {
             padding: 0.75rem;
             vertical-align: top;
-            border-top: 1px solid #dee2e6;
         }
 
         .return {
@@ -87,23 +85,47 @@
         .position {
             font-size: 18px;
             font-weight: bold;
-            margin-left: 1.5rem;
-            margin-bottom: 0em;
-        }
-
-        .sectionA {
-            display: flex;
-            flex-direction: column;
+            margin-bottom: 1em;
+            border-bottom: 1px solid #dee2e6;
         }
 
         .sectionB {
             margin-left: 3rem;
+        }
+
+        .uploadForm {
+            background-color: transparent;
+        }
+
+        .uploadInput {
+            font-family: courier, serif;
+        }
+
+        .uploadButton {
+            background-color: transparent;
+            border-radius: 4px;
+            color: white;
+            font-family: courier, serif;
+            border: 2px solid white;
+            cursor: pointer;
+            transition-duration: 0.4s;
+        }
+
+        .uploadButton:hover {
+            background-color: white;
+            border: 2px solid black;
+            color: black;
         }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="sectionA">
+        <h1>📤 Upload</h1>
+        <form class="uploadForm" enctype="multipart/form-data" method="post" action="{{upload}}">
+            <input class="uploadInput" id="fileupload" name="myfile" type="file"/>
+            <input class="uploadButton" type="submit" value="submit" id="submit" />
+        </form>
         <h1>📂 Directory</h1>
         <h4>{{workingDir}}</h4>
         <button class="return" name="return" onclick="window.location.href='{{return}}';">¬ Return</button>
