@@ -208,7 +208,7 @@ public class ArgsInterpreter {
      * Prints out the help.
      */
     private static void interpretHelp() {
-        System.out.println("JhttpFileShare Server 0.1.0\n");
+        System.out.println("JhttpFileShare Server 0.1.2\n");
         System.out.println("USAGE:\n\tjava -jar JhttpFileShare.jar [options/flags]\n");
         System.out.println("FLAGS:");
         System.out.println("\t-ip\t\t\t\t\tShows all Network Interfaces\n"
