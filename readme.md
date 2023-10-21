@@ -29,7 +29,7 @@ Currently this project only supports [GitHub Release](https://github.com/ShuraBl
 
 ## Java Arguments
 ```
-JhttpFileShare Server 0.1.0
+JhttpFileShare Server 0.1.1
 
 USAGE:
 	java -jar JhttpFileShare.jar [options/flags]
@@ -37,7 +37,7 @@ USAGE:
 FLAGS:
 	-ip				Shows all Network Interfaces
 	-v, -verbose			Enables verbose mode (more informations Server-side)
-	-nolimit			Disables the root folder restriction (Access entire file browser)
+	-nr				Disables the root folder restriction (Access entire file browser)
 	-h, -help			Shows this help
 
 OPTIONS:
