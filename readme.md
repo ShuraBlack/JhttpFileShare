@@ -23,6 +23,7 @@ Logging:
 - [Log4j Core](https://github.com/apache/logging-log4j2) - **2.20.0**
 - [Log4j API](https://github.com/apache/logging-log4j2) - **2.0.5**
 - [Log4J Simple](https://github.com/apache/logging-log4j2) - **2.0.5**
+- [Junit5](https://github.com/junit-team/junit5) - **5.9.2**
 
 ## Download ![Static Badge](https://img.shields.io/badge/version-v0.1.3-%230679b6)
 Currently this project only supports [GitHub Release](https://github.com/ShuraBlack/JhttpFileShare/releases) with a **.jar**.
