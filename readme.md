@@ -29,7 +29,7 @@ Currently this project only supports [GitHub Release](https://github.com/ShuraBl
 
 ## Java Arguments
 ```
-JhttpFileShare Server 0.1.1
+JhttpFileShare Server x.x.x
 
 USAGE:
 	java -jar JhttpFileShare.jar [options/flags]

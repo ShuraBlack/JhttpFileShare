@@ -78,10 +78,13 @@ public class DirectoryPage implements HttpHandler {
 
             String name;
             if (file.getType().equals("Directory")) {
-                name = String.format("<a class=\"dir\" href=\"%s\">\uD83D\uDCC1 %s</a>"
+
+                name = String.format("<a class=\"download\" title=\"Download Archive\" href=\"%s\">\uD83D\uDCE6</a>" +
+                                "<a class=\"dir\" href=\"%s\">\uD83D\uDCC1 %s</a>"
+                        , "/download/?filename=" + session.getWorkDirectory() + "/"+file.getName()
                         , "/directory/?folder=" + session.getWorkDirectory() + "/"+file.getName(), file.getName());
             } else {
-                name = String.format("<a class=\"download\" href=\"%s\">\uD83D\uDCBE </a>", "/download/?filename="
+                name = String.format("<a class=\"download\" title=\"Download File\" href=\"%s\">\uD83D\uDCBE </a>", "/download/?filename="
                         + session.getWorkDirectory() + "/"+file.getName()) + file.getName();
             }
 
