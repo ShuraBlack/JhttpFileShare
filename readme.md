@@ -62,4 +62,5 @@ java -jar JhttpFileShare.jar -ip=wlan0
 ```
 
 ## Example Page
-![Example page](https://github.com/ShuraBlack/JhttpFileShare/assets/69372954/8f06b174-55c9-47dd-bcf0-d8ea8e631ee6)
+![Example](https://github.com/ShuraBlack/JhttpFileShare/assets/69372954/8dbe49bd-3512-4057-b140-b1f696ab0229)
+
