@@ -46,8 +46,9 @@ public class DownloadPage implements HttpHandler {
         ZipOutputStream zipStream = null;
         String[] path = params.get(FILENAME).split("/");
         if (file.isDirectory()) {
-            LOGGER.info(String.format("%nExchange for \033[0;33m</Download>\033[0m...%nfrom %s:%s%narchive \033[0;33m<%s>\033[0m"
-                    , he.getRemoteAddress().getAddress().getHostAddress(), he.getRemoteAddress().getPort(), file.getName()));
+            if (Config.isVerbose())
+                LOGGER.info(String.format("%nExchange for \033[0;33m</Download>\033[0m...%nfrom %s:%s%narchive \033[0;33m<%s>\033[0m"
+                        , he.getRemoteAddress().getAddress().getHostAddress(), he.getRemoteAddress().getPort(), file.getName()));
 
             zipStream = Zip.zipFolder(file.getName(), file.getName());
             file = new File(file.getParent() + "/" + path[path.length - 1] + ".zip");
