@@ -23,7 +23,7 @@ public class Query {
      * @param query The query string.
      * @return The map with the key value pairs.
      */
-    public static Map<String, String> queryToMap(String query) {
+    public static Map<String, String> toMap(String query) {
         if(query == null || query.isEmpty()){
             return Collections.emptyMap();
         }

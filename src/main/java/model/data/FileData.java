@@ -79,7 +79,7 @@ public class FileData {
      * @param file The file to add.
      * @param depth The depth of the file in the directory structure.
      */
-    public static void addFile(File file, int depth, StringBuilder builder) {
+    private static void addFile(File file, int depth, StringBuilder builder) {
         builder.append("  ".repeat(depth)).append("> ").append(file.getName()).append("<br>");
 
         for (File f : file.listFiles()) {

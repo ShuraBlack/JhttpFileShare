@@ -4,27 +4,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import util.Config;
 
+import java.io.File;
 import java.net.*;
 import java.util.*;
-import java.util.regex.Pattern;
 
 /**
  * Interpreter for the command line arguments.
  * <br><br>
  * This class will interpret the command line arguments and set the corresponding values.
- * <br><br>
- * The following arguments are available:
- * <ul>
- *     <li>-ip</li>
- *     <li>-p, -port</li>
- *     <li>-v, -verbose</li>
- *     <li>-h, -help</li>
- *     <li>-nolimit</li>
- *     <li>-threads</li>
- *     <li>-root</li>
- * </ul>
  *
- * @version 0.1.0
+ * @version 0.1.4
  * @since 19.Oct.2023
  * @author ShuraBlack
  */
@@ -86,6 +75,9 @@ public class ArgsInterpreter {
                 case "-root":
                     interpretRoot(entry.getValue());
                         break;
+                case "-up":
+                    interpretUpload();
+                    break;
                 case "-help":
                 case "-h":
                     interpretHelp();
@@ -108,10 +100,13 @@ public class ArgsInterpreter {
     private static void interpretIP(String value) {
         try {
             if (value == null) {
-                LOGGER.info("Network Interfaces:\n(Search for the the local network name you use on the devices)\n");
                 Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
+                StringBuilder builder = new StringBuilder();
+                builder.append("\nNetwork Interfaces:\n(Search for the the local network name you use on the devices)\n");
                 for (NetworkInterface netint : Collections.list(nets))
-                    displayInterfaceInformation(netint);
+                    displayInterfaceInformation(builder, netint);
+
+                LOGGER.info(builder.toString());
                 System.exit(0);
             } else {
                 NetworkInterface netint = NetworkInterface.getByName(value);
@@ -196,44 +191,53 @@ public class ArgsInterpreter {
      * @param value The path or null.
      */
     private static void interpretRoot(String value) {
-        if (value == null || value.isEmpty() || !Pattern.matches("([a-zA-Z]:)?(\\\\[a-zA-Z0-9_.-]+)+\\\\?",value)) {
+        if (value == null) {
             LOGGER.warn("Root not found! Use default root.");
             return;
         }
+        File file = new File(value);
+        if (file.isFile()) {
+            LOGGER.warn("selected a file, not a directory! Use default root.");
+        }
         Config.set("ROOT_DIRECTORY", value.replaceAll("\\\\", "/"));
         LOGGER.info("Set Root to {}", Config.getRootDirectory());
+    }
+
+    private static void interpretUpload() {
+        Config.set("UPLOAD_ALLOWED", "true");
+        LOGGER.info("Upload got enabled");
     }
 
     /**
      * Prints out the help.
      */
     private static void interpretHelp() {
-        System.out.println("JhttpFileShare Server 0.1.2\n");
-        System.out.println("USAGE:\n\tjava -jar JhttpFileShare.jar [options/flags]\n");
-        System.out.println("FLAGS:");
-        System.out.println("\t-ip\t\t\t\t\tShows all Network Interfaces\n"
-                + "\t-v, -verbose\t\t\t\tEnables verbose mode (more informations Server-side)\n"
-                + "\t-nr\t\t\t\tDisables the root folder restriction (Access entire file browser)\n"
-                + "\t-h, -help\t\t\t\tShows this help\n");
-        System.out.println("OPTIONS:\n"
-                + "\t-ip=<network_name>\t\t\tSets the IP Address to the given network name [default: 0.0.0.0]\n"
-                + "\t-p, -port=<port>\t\t\tSets the Port to the given port [default: 80]\n"
-                + "\t-threads=<size>\t\t\t\tSets the Thread Pool Size to the given size [default: 3]\n"
-                + "\t-root=<path>\t\t\t\tSets the root folder [default: user.dir]\n");
+        LOGGER.info("\nJhttpFileShare Server 0.1.4\n\n" +
+                "USAGE:\n\tjava -jar JhttpFileShare.jar [options/flags]\n\n" +
+                "FLAGS:\n" +
+                "\t-ip\t\t\t\t\t\t\tShows all Network Interfaces\n" +
+                "\t-v, -verbose\t\t\t\tEnables verbose mode (more informations Server-side)\n" +
+                "\t-nr\t\t\t\t\t\t\tDisables the root folder restriction (Access entire file browser)\n" +
+                "\t-up\t\t\t\t\t\t\tEnables uploading to the host mashine\n" +
+                "\t-h, -help\t\t\t\t\tShows this help\n\n" +
+                "OPTIONS:\n" +
+                "\t-ip=<network_name>\t\t\tSets the IP Address to the given network name [default: 0.0.0.0]\n" +
+                "\t-p, -port=<port>\t\t\tSets the Port to the given port [default: 80]\n" +
+                "\t-threads=<size>\t\t\t\tSets the Thread Pool Size to the given size [default: 3]\n" +
+                "\t-root=<path>\t\t\t\tSets the root folder [default: user.dir]\n");
         System.exit(0);
     }
 
     /**
-     * Prints out the network interfaces.
+     * Appends the network interface information to the given string builder.
+     * @param builder The string builder.
      * @param netint The network interface.
      */
-    private static void displayInterfaceInformation(NetworkInterface netint) {
-        StringBuilder sb = new StringBuilder();
+    private static void displayInterfaceInformation(StringBuilder builder, NetworkInterface netint) {
         Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
         for (InetAddress inetAddress : Collections.list(inetAddresses)) {
             if (inetAddress instanceof Inet6Address) continue;
-            sb.append(netint.getName()).append(" - ").append(inetAddress.getHostAddress()).append("\n");
+            builder.append(netint.getName()).append(" - ").append(inetAddress.getHostAddress()).append("\n");
         }
-        System.out.printf(sb.toString());
     }
 }

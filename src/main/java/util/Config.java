@@ -6,7 +6,7 @@ import java.util.Properties;
  * This class is used to store the configuration of the server.
  * It also contains the default values.
  *
- * @version 0.1.1
+ * @version 0.1.4
  * @since 20.Oct.2023
  * @autor ShuraBlack
  */
@@ -33,6 +33,7 @@ public class Config {
         APP_CONFIG.put("VERBOSE", "false");
         APP_CONFIG.put("ROOT_DIRECTORY", System.getProperty("user.dir").replaceAll("\\\\", "/"));
         APP_CONFIG.put("ROOT_STRUCTURE", "");
+        APP_CONFIG.put("UPLOAD_ALLOWED", "false");
     }
 
     // =================================================================================================================
@@ -110,5 +111,13 @@ public class Config {
      */
     public static String getRootStructure() {
         return APP_CONFIG.getProperty("ROOT_STRUCTURE");
+    }
+
+    /**
+     * Get the upload mode of the server.
+     * @return The upload mode.
+     */
+    public static boolean isUploadAllowed() {
+        return Boolean.parseBoolean(APP_CONFIG.getProperty("UPLOAD_ALLOWED"));
     }
 }

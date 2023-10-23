@@ -15,8 +15,8 @@ import java.io.OutputStream;
 import java.util.Map;
 import java.util.Optional;
 
-import static util.FileSize.convertSize;
-import static util.Query.queryToMap;
+import static util.FileSize.convert;
+import static util.Query.toMap;
 
 /**
  * This class is responsible for the directory page request.
@@ -48,7 +48,7 @@ public class DirectoryPage implements HttpHandler {
             userSession = session.get();
         }
 
-        Map<String, String> params = queryToMap(he.getRequestURI().getQuery());
+        Map<String, String> params = toMap(he.getRequestURI().getQuery());
         if (params.containsKey("folder")) {
             userSession.setWorkDirectory(params.get("folder"));
             userSession.clear();
@@ -90,7 +90,7 @@ public class DirectoryPage implements HttpHandler {
 
             html.append("<dt>").append(name).append("</dt>\n");
             if (file.getSize() > 0) {
-                html.append("<dd>").append(convertSize(file.getSize())).append("</dd>\n");
+                html.append("<dd>").append(convert(file.getSize())).append("</dd>\n");
             }
         }
         html.append("</dl>\n");
@@ -111,6 +111,7 @@ public class DirectoryPage implements HttpHandler {
      * @return The filled content.
      */
     public static String populateContent(UserSession userSession, String content) {
+        content = content.replace("{{uploadDisabled}}", !Config.isUploadAllowed() ? "display: none;" : "display: inline-block;");
         content = content.replace("{{returnDisabled}}",
                 Config.isRootRestricted() && userSession.getWorkDirectory().equals(Config.getRootDirectory())
                         ? "display: none;" : "display: inline-block;");

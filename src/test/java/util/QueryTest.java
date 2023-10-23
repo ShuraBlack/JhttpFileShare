@@ -13,7 +13,7 @@ class QueryTest {
     @DisplayName("queryToMap() - valid input - return mapping")
     void queryToMap_validInput() {
         final String query = "key1=value1&key2=value2&key3=value3";
-        final Map<String, String> map = Query.queryToMap(query);
+        final Map<String, String> map = Query.toMap(query);
 
         assertEquals(3, map.size());
         assertEquals("value1", map.get("key1"));
@@ -25,7 +25,7 @@ class QueryTest {
     @DisplayName("queryToMap() - empty input - return empty mapping")
     void queryToMap_emptyInput() {
         final String query = "";
-        final Map<String, String> map = Query.queryToMap(query);
+        final Map<String, String> map = Query.toMap(query);
 
         assertEquals(0, map.size());
     }
@@ -34,7 +34,7 @@ class QueryTest {
     @DisplayName("queryToMap() - null input - return empty mapping")
     void queryToMap_nullInput() {
         final String query = null;
-        final Map<String, String> map = Query.queryToMap(query);
+        final Map<String, String> map = Query.toMap(query);
 
         assertEquals(0, map.size());
     }

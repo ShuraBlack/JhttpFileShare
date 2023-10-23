@@ -25,7 +25,7 @@ Logging:
 - [Log4J Simple](https://github.com/apache/logging-log4j2) - **2.0.5**
 - [Junit5](https://github.com/junit-team/junit5) - **5.9.2**
 
-## Download ![Static Badge](https://img.shields.io/badge/version-v0.1.3-%230679b6)
+## Download ![Static Badge](https://img.shields.io/badge/version-v0.1.4-%230679b6)
 Currently this project only supports [GitHub Release](https://github.com/ShuraBlack/JhttpFileShare/releases) with a **.jar**.
 
 ## Java Arguments
@@ -36,16 +36,17 @@ USAGE:
 	java -jar JhttpFileShare.jar [options/flags]
 
 FLAGS:
-	-ip				Shows all Network Interfaces
-	-v, -verbose			Enables verbose mode (more informations Server-side)
-	-nr				Disables the root folder restriction (Access entire file browser)
-	-h, -help			Shows this help
+	-ip					Shows all Network Interfaces
+	-v, -verbose				Enables verbose mode (more informations Server-side)
+	-nr					Disables the root folder restriction (Access entire file browser)
+	-up					Enables uploading to the host mashine
+	-h, -help				Shows this help
 
 OPTIONS:
-	-ip=<network_name>		Sets the IP Address to the given network name [default: 0.0.0.0]
-	-p, -port=<port>		Sets the Port to the given port [default: 80]
-	-threads=<size>			Sets the Thread Pool Size to the given size [default: 3]
-	-root=<path>			Sets the root folder [default: user.dir]
+	-ip=<network_name>			Sets the IP Address to the given network name [default: 0.0.0.0]
+	-p, -port=<port>			Sets the Port to the given port [default: 80]
+	-threads=<size>				Sets the Thread Pool Size to the given size [default: 3]
+	-root=<path>				Sets the root folder [default: user.dir]
 ```
 
 ## Usage
