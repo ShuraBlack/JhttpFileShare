@@ -1,7 +1,6 @@
 package model.server;
 
 import com.sun.net.httpserver.HttpServer;
-import controller.Controller;
 import model.pages.DirectoryPage;
 import model.pages.DownloadPage;
 import model.pages.UploadPage;
@@ -17,7 +16,7 @@ import java.util.concurrent.Executors;
  * This class represents the server component of the JhttpFileShare application.<br><br>
  * It will create a HttpServer instance and register the needed contexts.
  *
- * @version 0.1.0
+ * @version 0.1.4
  * @since 19.Oct.2023
  * @author ShuraBlack
  */
@@ -43,13 +42,18 @@ public class Server {
             httpServer.createContext("/directory", new DirectoryPage());
             if (Config.isVerbose())
                 LOGGER.info("Created context /directory");
+
             httpServer.createContext("/download", new DownloadPage());
             if (Config.isVerbose())
                 LOGGER.info("Created context /download");
+
             httpServer.createContext("/upload", new UploadPage());
-            if (Config.isVerbose())
-                LOGGER.info("Created context /upload");
-            httpServer.setExecutor(Executors.newFixedThreadPool(Config.getThreadPoolSize()));
+            if (Config.isUploadAllowed()) {
+                if (Config.isVerbose())
+                    LOGGER.info("Created context /upload");
+                httpServer.setExecutor(Executors.newFixedThreadPool(Config.getThreadPoolSize()));
+            }
+
             httpServer.start();
         } catch (IOException e) {
             LOGGER.error("Couldnt start Server!", e);

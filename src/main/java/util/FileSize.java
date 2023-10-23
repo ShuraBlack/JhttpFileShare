@@ -19,7 +19,7 @@ public class FileSize {
      * @param bytes The size in bytes.
      * @return The human-readable string.
      */
-    public static String convertSize(long bytes) {
+    public static String convert(long bytes) {
         if (bytes < 1024) {
             return bytes + " byte";
         } else if (bytes < 1024 * 1024) {

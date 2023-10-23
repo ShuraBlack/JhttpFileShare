@@ -12,6 +12,7 @@ import util.PageLoader;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,11 +39,15 @@ public class UploadPage implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        if (!Config.isUploadAllowed()) {
+            return;
+        }
+
         Headers headers = httpExchange.getRequestHeaders();
         String contentType = headers.getFirst("Content-Type");
         if(contentType.startsWith("multipart/form-data")){
             String boundary = contentType.substring(contentType.indexOf("boundary=")+9);
-            byte[] boundaryBytes = ("\r\n--" + boundary).getBytes(Charset.forName("UTF-8"));
+            byte[] boundaryBytes = ("\r\n--" + boundary).getBytes(StandardCharsets.UTF_8);
             byte[] payload = getInputAsBinary(httpExchange.getRequestBody());
             ArrayList<MultiPart> list = new ArrayList<>();
 
@@ -56,7 +61,7 @@ public class UploadPage implements HttpHandler {
                 }
                 byte[] part = Arrays.copyOfRange(payload,startPart,endPart);
 
-                int headerEnd = indexOf(part,"\r\n\r\n".getBytes(Charset.forName("UTF-8")),0,part.length-1);
+                int headerEnd = indexOf(part,"\r\n\r\n".getBytes(StandardCharsets.UTF_8),0,part.length-1);
                 if(headerEnd>0) {
                     MultiPart p = new MultiPart();
                     byte[] head = Arrays.copyOfRange(part, 0, headerEnd);

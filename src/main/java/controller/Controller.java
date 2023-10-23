@@ -16,7 +16,7 @@ import java.util.Scanner;
  * Main component for the JhttpFileShare application.<br><br>
  * This class is the entry point and will initialize the server and the command line interface.
  *
- * @version 0.1.0
+ * @version 0.1.4
  * @since 19.Oct.2023
  * @author ShuraBlack
  */
@@ -55,7 +55,7 @@ public class Controller {
 
             System.out.println(
                       "==================================================================================\n"
-                    + "= JhttpFileShare - Version 0.1.2                                                 =\n"
+                    + "= JhttpFileShare - Version 0.1.4                                                 =\n"
                     + "= Code by ShuraBlack                                                             =\n"
                     + "==================================================================================\n"
                     + getProperties() + "\n"
@@ -97,16 +97,15 @@ public class Controller {
      * @return The properties
      */
     private static String getProperties() {
-        String properties = String.format("= Verbose: %s, "
-                        + "Root Restriction: %s, "
-                        + "Port: %s, "
-                        + "Thread Pool Size: %s",
+        return String.format("= Verbose: %-27s IP: %-59s =%n"
+                        + "= Root Restriction: %-18s Port: %-57s =%n"
+                        + "= Upload Allowed: %-20s Thread Pool Size: %-45s =",
                 colorize(Config.isVerbose()),
+                "\033[0;36m" + Config.getIpAddress() + "\033[0m",
                 colorize(Config.isRootRestricted()),
-                Config.getPort(),
-                Config.getThreadPoolSize());
-        properties += " ".repeat(102 - properties.length()) + " =";
-        return properties;
+                "\033[0;36m" + Config.getPort() + "\033[0m",
+                colorize(Config.isUploadAllowed()),
+                "\033[0;36m" + Config.getThreadPoolSize() + "\033[0m");
     }
 
     /**

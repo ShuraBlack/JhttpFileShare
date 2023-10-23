@@ -93,6 +93,10 @@
             margin-left: 3rem;
         }
 
+        .upload {
+            {{uploadDisabled}}
+        }
+
         .uploadForm {
             background-color: transparent;
         }
@@ -121,11 +125,13 @@
 <body>
 <div class="container">
     <div class="sectionA">
-        <h1>📤 Upload</h1>
-        <form class="uploadForm" enctype="multipart/form-data" method="post" action="{{upload}}">
-            <input class="uploadInput" id="fileupload" name="myfile" type="file"/>
-            <input class="uploadButton" type="submit" value="submit" id="submit" />
-        </form>
+        <div class="upload">
+            <h1>📤 Upload</h1>
+            <form class="uploadForm" enctype="multipart/form-data" method="post" action="{{upload}}">
+                <input class="uploadInput" id="fileupload" name="myfile" type="file"/>
+                <input class="uploadButton" type="submit" value="submit" id="submit"/>
+            </form>
+        </div>
         <h1>📂 Directory</h1>
         <h4>{{workingDir}}</h4>
         <button class="return" name="return" onclick="window.location.href='{{return}}';">¬ Return</button>
