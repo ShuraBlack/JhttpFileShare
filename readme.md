@@ -20,12 +20,13 @@ This project requires Java 11+ [SDK](https://www.oracle.com/java/technologies/do
 All dependencies are managed by [Maven](https://maven.apache.org)<br>
 
 Logging:
-- [Log4j Core](https://github.com/apache/logging-log4j2) - **2.20.0**
-- [Log4j API](https://github.com/apache/logging-log4j2) - **2.0.5**
-- [Log4J Simple](https://github.com/apache/logging-log4j2) - **2.0.5**
+- [Log4j Core](https://github.com/apache/logging-log4j2) **2.20.0**
+- [Log4j API](https://github.com/apache/logging-log4j2) **2.0.5**
+- [Log4J Simple](https://github.com/apache/logging-log4j2) **2.0.5**
+
 
 Testing:
-- [Junit5](https://github.com/junit-team/junit5) - **5.9.2**
+- [Junit5](https://github.com/junit-team/junit5) **5.9.2**
 
 ## Download ![Static Badge](https://img.shields.io/badge/version-v0.1.5-%230679b6)
 Currently this project only supports [GitHub Release](https://github.com/ShuraBlack/JhttpFileShare/releases) with a **.jar**.
