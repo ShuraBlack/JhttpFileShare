@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.Controller;
 import model.data.FileData;
+import model.data.FileSystemData;
 import model.session.UserSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,10 +13,12 @@ import util.PageLoader;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static util.FileSize.convert;
+import static util.FileUtil.convert;
+import static util.FileUtil.convertTime;
 import static util.Query.toMap;
 
 /**
@@ -90,12 +93,22 @@ public class DirectoryPage implements HttpHandler {
 
             html.append("<dt>").append(name).append("</dt>\n");
             if (file.getSize() > 0) {
-                html.append("<dd>").append(convert(file.getSize())).append("</dd>\n");
+                html.append("<dd>").append(convert(file.getSize())).append("<br>\uD83D\uDD51").append(convertTime(file.getModified())).append("</dd>\n");
             }
         }
         html.append("</dl>\n");
         if (session.getFiles().isEmpty()) {
             html.append("<h1>Empty Directory</h1>");
+        }
+        return html.toString();
+    }
+
+    public static String htmlFromFileSystemData(List<FileSystemData> dataList) {
+        StringBuilder html = new StringBuilder();
+        for (FileSystemData data : dataList) {
+            html.append("<p>")
+                    .append(String.format("<b>%s</b><br>Free: %s<br>Total: %s", data.getName(), convert(data.getAvailableSpace()), convert(data.getTotalSpace())))
+                    .append("</p>");
         }
         return html.toString();
     }
@@ -111,6 +124,7 @@ public class DirectoryPage implements HttpHandler {
      * @return The filled content.
      */
     public static String populateContent(UserSession userSession, String content) {
+        content = content.replace("{{driverGrid}}", htmlFromFileSystemData(Controller.getDriverData()));
         content = content.replace("{{uploadDisabled}}", !Config.isUploadAllowed() ? "display: none;" : "display: inline-block;");
         content = content.replace("{{returnDisabled}}",
                 Config.isRootRestricted() && userSession.getWorkDirectory().equals(Config.getRootDirectory())

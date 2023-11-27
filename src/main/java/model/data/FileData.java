@@ -33,15 +33,21 @@ public class FileData {
     private final long size;
 
     /**
+     * The last modified date of the file.
+     */
+    private final long modified;
+
+    /**
      * Creates a new FileData object with the given parameters.
      * @param name The name of the file.
      * @param type The type of the file.
      * @param size The size of the file.
      */
-    public FileData(String name, String type, long size) {
+    public FileData(String name, String type, long size, long modified) {
         this.name = name;
         this.type = type;
         this.size = size;
+        this.modified = modified;
     }
 
     /**
@@ -59,7 +65,7 @@ public class FileData {
                 .collect(Collectors.toList());
 
         for (File f : filesList) {
-            files.add(new FileData(f.getName(), f.isDirectory() ? "Directory" : "File", f.length()));
+            files.add(new FileData(f.getName(), f.isDirectory() ? "Directory" : "File", f.length(), f.lastModified()));
         }
         return files;
     }
@@ -83,7 +89,7 @@ public class FileData {
         builder.append("  ".repeat(depth)).append("> ").append(file.getName()).append("<br>");
 
         for (File f : file.listFiles()) {
-            if (f.isDirectory() && !f.isHidden()) {
+            if (f.isDirectory() && !f.isHidden() && f.getName().length() > 1) {
                 addFile(f, depth + 1, builder);
             }
         }
@@ -115,6 +121,14 @@ public class FileData {
      */
     public long getSize() {
         return size;
+    }
+
+    /**
+     * Getter for modified
+     * @return The last modified date of the file.
+     */
+    public long getModified() {
+        return modified;
     }
 
 }

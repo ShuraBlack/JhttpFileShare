@@ -212,14 +212,14 @@ public class ArgsInterpreter {
      * Prints out the help.
      */
     private static void interpretHelp() {
-        LOGGER.info("\nJhttpFileShare Server 0.1.4\n\n" +
+        LOGGER.info("\nJhttpFileShare Server 0.1.5\n\n" +
                 "USAGE:\n\tjava -jar JhttpFileShare.jar [options/flags]\n\n" +
                 "FLAGS:\n" +
-                "\t-ip\t\t\t\t\t\t\tShows all Network Interfaces\n" +
+                "\t-ip\t\t\t\t\tShows all Network Interfaces\n" +
                 "\t-v, -verbose\t\t\t\tEnables verbose mode (more informations Server-side)\n" +
-                "\t-nr\t\t\t\t\t\t\tDisables the root folder restriction (Access entire file browser)\n" +
-                "\t-up\t\t\t\t\t\t\tEnables uploading to the host mashine\n" +
-                "\t-h, -help\t\t\t\t\tShows this help\n\n" +
+                "\t-nr\t\t\t\t\tDisables the root folder restriction (Access entire file browser)\n" +
+                "\t-up\t\t\t\t\tEnables uploading to the host mashine\n" +
+                "\t-h, -help\t\t\t\tShows this help\n\n" +
                 "OPTIONS:\n" +
                 "\t-ip=<network_name>\t\t\tSets the IP Address to the given network name [default: 0.0.0.0]\n" +
                 "\t-p, -port=<port>\t\t\tSets the Port to the given port [default: 80]\n" +

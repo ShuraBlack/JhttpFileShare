@@ -6,7 +6,7 @@ import java.util.Properties;
  * This class is used to store the configuration of the server.
  * It also contains the default values.
  *
- * @version 0.1.4
+ * @version 0.1.5
  * @since 20.Oct.2023
  * @autor ShuraBlack
  */

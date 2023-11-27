@@ -20,12 +20,15 @@ This project requires Java 11+ [SDK](https://www.oracle.com/java/technologies/do
 All dependencies are managed by [Maven](https://maven.apache.org)<br>
 
 Logging:
-- [Log4j Core](https://github.com/apache/logging-log4j2) - **2.20.0**
-- [Log4j API](https://github.com/apache/logging-log4j2) - **2.0.5**
-- [Log4J Simple](https://github.com/apache/logging-log4j2) - **2.0.5**
-- [Junit5](https://github.com/junit-team/junit5) - **5.9.2**
+- [Log4j Core](https://github.com/apache/logging-log4j2) **2.20.0**
+- [Log4j API](https://github.com/apache/logging-log4j2) **2.0.5**
+- [Log4J Simple](https://github.com/apache/logging-log4j2) **2.0.5**
 
-## Download ![Static Badge](https://img.shields.io/badge/version-v0.1.4-%230679b6)
+
+Testing:
+- [Junit5](https://github.com/junit-team/junit5) **5.9.2**
+
+## Download ![Static Badge](https://img.shields.io/badge/version-v0.1.5-%230679b6)
 Currently this project only supports [GitHub Release](https://github.com/ShuraBlack/JhttpFileShare/releases) with a **.jar**.
 
 ## Java Arguments
@@ -64,5 +67,5 @@ java -jar JhttpFileShare.jar -ip=wlan0
 ```
 
 ## Example Page
-![Example](https://github.com/ShuraBlack/JhttpFileShare/assets/69372954/8dbe49bd-3512-4057-b140-b1f696ab0229)
+![Example](https://github.com/ShuraBlack/JhttpFileShare/assets/69372954/1294609d-8dff-42df-a981-2c9928646453)
 

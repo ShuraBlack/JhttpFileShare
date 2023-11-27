@@ -119,6 +119,7 @@ public class UploadPage implements HttpHandler {
         }
 
         if (parts != null && !parts.isEmpty()) {
+            Controller.updateDriverData();
             for (MultiPart part : parts) {
                 try (FileOutputStream stream = new FileOutputStream(userSession.getWorkDirectory() + "/" + part.filename)) {
                     stream.write(part.bytes);
