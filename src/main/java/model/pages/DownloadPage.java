@@ -13,7 +13,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.Map;
 
-import static util.Query.queryToMap;
+import static util.Query.toMap;
 
 /**
  * This class is responsible for the download page request.
@@ -36,7 +36,7 @@ public class DownloadPage implements HttpHandler {
 
     @Override
     public void handle(HttpExchange he) throws IOException {
-        Map<String, String> params = queryToMap(he.getRequestURI().getQuery());
+        Map<String, String> params = toMap(he.getRequestURI().getQuery());
         if (params.isEmpty() || !params.containsKey(FILENAME) || !params.get(FILENAME).contains(Config.getRootDirectory())) {
             return;
         }

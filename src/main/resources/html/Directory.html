@@ -93,6 +93,10 @@
             margin-left: 3rem;
         }
 
+        .upload {
+            {{uploadDisabled}}
+        }
+
         .uploadForm {
             background-color: transparent;
         }
@@ -116,16 +120,57 @@
             border: 2px solid black;
             color: black;
         }
+
+        .grid {
+            font-family: courier, serif;
+            display: grid;
+            gap: 0.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            padding: 0 18px;
+            background-color: transparent;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+
+        .collapsible {
+            background-color: transparent;
+            border-radius: 4px;
+            color: white;
+            font-family: courier, serif;
+            border: 2px solid white;
+            cursor: pointer;
+            transition-duration: 0.4s;
+        }
+
+        .collapsible:hover {
+            background-color: white;
+            border: 2px solid black;
+            color: black;
+        }
+
+        .active, .collapsible:hover {
+            background-color: white;
+            border: 2px solid black;
+            color: black;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="sectionA">
-        <h1>📤 Upload</h1>
-        <form class="uploadForm" enctype="multipart/form-data" method="post" action="{{upload}}">
-            <input class="uploadInput" id="fileupload" name="myfile" type="file"/>
-            <input class="uploadButton" type="submit" value="submit" id="submit" />
-        </form>
+        <div class="upload">
+            <h1>📤 Upload</h1>
+            <form class="uploadForm" enctype="multipart/form-data" method="post" action="{{upload}}">
+                <input class="uploadInput" id="fileupload" name="myfile" type="file"/>
+                <input class="uploadButton" type="submit" value="submit" id="submit"/>
+            </form>
+        </div>
+        <h1>💽 Driver</h1>
+        <button type="button" id="driverButton" class="collapsible" onclick="changeDriverButton(this)">Show</button>
+        <div class="grid">
+            {{driverGrid}}
+        </div>
         <h1>📂 Directory</h1>
         <h4>{{workingDir}}</h4>
         <button class="return" name="return" onclick="window.location.href='{{return}}';">¬ Return</button>
@@ -137,5 +182,27 @@
         <p>© ShuraBlack - 2023</p>
     </div>
 </div>
+<script>
+    function changeDriverButton(btn) {
+        if (btn.textContent=="Show") btn.textContent = "Hide";
+        else btn.textContent = "Show";
+    }
+</script>
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight){
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+      });
+    }
+</script>
 </body>
 </html>
