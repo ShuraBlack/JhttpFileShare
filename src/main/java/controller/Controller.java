@@ -1,6 +1,7 @@
 package controller;
 
 import model.data.FileData;
+import model.data.FileSystemData;
 import model.interpreter.ArgsInterpreter;
 import model.server.Server;
 import model.session.UserSession;
@@ -8,6 +9,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import util.Config;
 
+import javax.swing.filechooser.FileSystemView;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +19,7 @@ import java.util.Scanner;
  * Main component for the JhttpFileShare application.<br><br>
  * This class is the entry point and will initialize the server and the command line interface.
  *
- * @version 0.1.0
+ * @version 0.1.5
  * @since 19.Oct.2023
  * @author ShuraBlack
  */
@@ -38,6 +41,11 @@ public class Controller {
     private static final List<UserSession> SESSIONS = new ArrayList<>();
 
     /**
+     * List of all drivers.
+     */
+    private static final List<FileSystemData> DRIVER_DATA = new ArrayList<>();
+
+    /**
      * Entry point of the application.
      *
      * @param args Command line arguments.
@@ -45,6 +53,7 @@ public class Controller {
     public Controller(String[] args) {
         Config.init();
         ArgsInterpreter.interpret(args);
+        updateDriverData();
         server = new Server();
 
         FileData.getDirectoryStructure(Config.getRootDirectory());
@@ -55,7 +64,7 @@ public class Controller {
 
             System.out.println(
                       "==================================================================================\n"
-                    + "= JhttpFileShare - Version 0.1.2                                                 =\n"
+                    + "= JhttpFileShare - Version 0.1.4                                                 =\n"
                     + "= Code by ShuraBlack                                                             =\n"
                     + "==================================================================================\n"
                     + getProperties() + "\n"
@@ -88,6 +97,31 @@ public class Controller {
         return SESSIONS;
     }
 
+    /**
+     * Getter for the server instance.
+     * @return The server instance.
+     */
+    public static List<FileSystemData> getDriverData() {
+        return DRIVER_DATA;
+    }
+
+    // =================================================================================================================
+    // Public Methods
+    // =================================================================================================================
+
+    /**
+     * Updates the driver data.
+     * This method is called every time a upload is finished.
+     */
+    public static void updateDriverData() {
+        DRIVER_DATA.clear();
+        File[] roots = File.listRoots();
+        for (File drive : roots) {
+            String name = FileSystemView.getFileSystemView().getSystemDisplayName (drive);
+            DRIVER_DATA.add(new FileSystemData(name, drive.getTotalSpace(), drive.getUsableSpace()));
+        }
+    }
+
     // =================================================================================================================
     // Private Methods
     // =================================================================================================================
@@ -97,16 +131,15 @@ public class Controller {
      * @return The properties
      */
     private static String getProperties() {
-        String properties = String.format("= Verbose: %s, "
-                        + "Root Restriction: %s, "
-                        + "Port: %s, "
-                        + "Thread Pool Size: %s",
+        return String.format("= Verbose: %-27s IP: %-59s =%n"
+                        + "= Root Restriction: %-18s Port: %-57s =%n"
+                        + "= Upload Allowed: %-20s Thread Pool Size: %-45s =",
                 colorize(Config.isVerbose()),
+                "\033[0;36m" + Config.getIpAddress() + "\033[0m",
                 colorize(Config.isRootRestricted()),
-                Config.getPort(),
-                Config.getThreadPoolSize());
-        properties += " ".repeat(102 - properties.length()) + " =";
-        return properties;
+                "\033[0;36m" + Config.getPort() + "\033[0m",
+                colorize(Config.isUploadAllowed()),
+                "\033[0;36m" + Config.getThreadPoolSize() + "\033[0m");
     }
 
     /**

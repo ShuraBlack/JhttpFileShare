@@ -109,4 +109,5 @@ public class UserSession {
         this.workDirectory = workDirectory;
         this.workDirectory = this.workDirectory.replaceAll("\\\\", "/");
     }
+
 }
